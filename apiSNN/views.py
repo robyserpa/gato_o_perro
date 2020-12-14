@@ -8,7 +8,6 @@ from django.shortcuts import render
 import pyrebase #para consumo servicio base de datos de firebase
 from apiSNN.Logica import modeloSNN #para utilizar modelo SNN
 
-import cv2
 # Create your views here.
 class ListLibro(generics.ListCreateAPIView):
     """
@@ -89,17 +88,27 @@ class Clasificacion():
 
     def predecir(request):
 
-        imagen = request.FILES.get('image')
+        if request.method == "POST":
+            try:
+                imagen = request.FILES.get('image')
+
+                if imagen != None:
+                    guardar = models.Image(image=imagen)
+                    guardar.save()
+
+                    url = guardar.image.url
+
+                    resultado, maxElement, certeza = modeloSNN.modeloSNN.predecirAnimal(modeloSNN.modeloSNN,url[1:])
+                    
+                    guardar.label = resultado
+                    guardar.probability = maxElement
+                    guardar.save()
+
+                    return render(request, "welcome.html",{"e":resultado, 'ruta':'..'+url, 'pred':certeza})
+                else:
+                    return render(request, "sobrevivencia.html",{'msg':'Debe selecionar una imagen'})
+            except:
+                return render(request, "sobrevivencia.html",{'msg':'Debe selecionar una imagen'})
+            
+
         
-        guardar = models.Image(image=imagen)
-        guardar.save()
-
-        url = guardar.image.url
-
-        resultado, maxElement, certeza = modeloSNN.modeloSNN.predecirAnimal(modeloSNN.modeloSNN,url[1:])
-        
-        guardar.label = resultado
-        guardar.probability = maxElement
-        guardar.save()
-
-        return render(request, "welcome.html",{"e":resultado, 'ruta':'..'+url, 'pred':certeza})
