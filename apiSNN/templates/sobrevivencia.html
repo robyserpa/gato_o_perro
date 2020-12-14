@@ -1,0 +1,26 @@
+{% if msg %}
+<script>
+    alert('{{msg}}')
+</script>
+{% endif %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign</title>
+
+</head>
+<body>
+
+<form action="/apiSNN/predecir/" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h3>Seleccionar Imágen de un Gato o Perro:</h3>
+    <br>
+    <input type="hidden" name="label" value="">
+    <input type="file" name="image" id="image"/>
+    <br>
+    <br>
+    <input type="submit" name="subir-imagen" value="Predecir" style="background-color: aquamarine;"/>
+</form>
+</body>
+</html>
