@@ -26,7 +26,7 @@ SECRET_KEY = 'cofatjc=*e6=bg&2boyecis_v(c+4!frkdqz7^e(o(fn86lhq-'
 DEBUG = True
 
 #ESTO SE MODIFICÓ. SE DEBE PONER EL DOMINIO ESPECÍFICO
-ALLOWED_HOSTS = ['0.0.0.0','127.0.0.1','proyectomlweb.uc.r.appspot.com','proyectomlweb.appspot.com']
+ALLOWED_HOSTS = ['0.0.0.0','127.0.0.1','34.121.225.7','proyectomlweb.uc.r.appspot.com','proyectomlweb.appspot.com']
 
 # Application definition
 
